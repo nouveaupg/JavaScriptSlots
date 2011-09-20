@@ -1,0 +1,278 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.clear {
+	clear:both;
+}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	text-align:center;
+}
+#container {
+	width:1080px;
+	height: 1920px;
+	background-image:url(../images/background.jpg);
+	margin: 0 auto;
+}
+
+
+#logo {
+	background: #f2f2f2; /* Old browsers */
+	background: -moz-linear-gradient(top, #f2f2f2 0%, #d6d6d6 43%, #d3d3d3 51%, #c1c1c1 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(43%,#d6d6d6), color-stop(51%,#d3d3d3), color-stop(100%,#c1c1c1)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #f2f2f2 0%,#d6d6d6 43%,#d3d3d3 51%,#c1c1c1 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #f2f2f2 0%,#d6d6d6 43%,#d3d3d3 51%,#c1c1c1 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #f2f2f2 0%,#d6d6d6 43%,#d3d3d3 51%,#c1c1c1 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#c1c1c1',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #f2f2f2 0%,#d6d6d6 43%,#d3d3d3 51%,#c1c1c1 100%); /* W3C */
+}
+
+#logo img {
+	padding: 20px 0;
+}
+
+#welcome {
+	height:110px;
+	background-color:rgba(0,0,0,0.5);
+	border: solid 1px #FFFFFF;
+}
+
+#welcome h1 {
+	color: #FFFFFF; 
+	font-size:50px;
+	font-weight:lighter;
+	margin:0;
+	padding: 30px 0 0;
+	text-shadow: 2px 2px 4px #000000;
+	filter: dropshadow(color=#000000, offx=2, offy=2);
+}
+
+#slotmachine {
+	height:1232px;
+	background-image:url(../images/slot-machine.png);
+}
+
+#rotating-message {
+	padding:135px 0 0;
+	font-size:65px;
+}
+
+#holder {
+	float:left;
+	padding: 150px 0 0 139px;
+}
+
+.wheels {
+	float:left;
+	width:250px;
+	margin:0 28px 0 0;
+	
+}
+
+#holder2 {
+	float:left;
+	padding: 30px 0 0 139px;
+	width:420px;
+    top:1150px;
+    position:absolute;
+}
+
+.painpoint {
+	width:400px;
+	background-color:#323232;
+	-webkit-box-shadow: inset 2px 2px 15px 3px rgba(0, 0, 0, 100);
+	-moz-box-shadow: inset 2px 2px 15px 3px rgba(0, 0, 0, 100);
+	box-shadow: inset 2px 2px 15px 3px rgba(0, 0, 0, 100);
+	border: solid 3px rgba(251, 234, 177, .1);
+	font-size:30px;
+	color:#FFF;
+	padding:20px 0 10px 0;
+	margin:20px 0;
+	
+}
+#spin {
+    position:absolute;
+    left:600px;
+    top:1150px;
+	float:left;
+	width:320px;
+	height:320px;
+	margin: 50px 0 0 70px;
+	display:block;
+	border-radius:160px;
+	-moz-border-radius:160px;
+	-webkit-border-radius:160px;
+	-khtml-border-radius:160px;
+	background:#e43333;
+	font-size:90px;
+	color:#fff;
+	line-height:320px;
+	text-align:center;
+	-webkit-box-shadow: inset 0px 6px 15px 3px rgba(225, 225, 225, .8);
+	-moz-box-shadow: inset 0px 6px 15px 3px rgba(225, 225, 225, .8);
+	box-shadow: inset 0px 6px 15px 3px rgba(225, 225, 225, .8);
+}
+
+#footer {
+	width:100%;
+	float: left;
+	margin:83px 0 0 0;
+	padding:20px 0 0 0;
+	color:#FFF;
+	background-color:rgba(0,0,0,0.5);
+	border: solid 1px #FFFFFF;
+}
+
+.awards {
+	margin:0 0 20px 0;
+}
+
+.awards img {
+	padding:0 20px 0 0;
+}
+
+.slot_machine_layer {
+	position:absolute;
+	left:200px;
+	top:740px;
+	overflow:hidden;
+}
+
+.slot_icon {
+	position:relative;
+	width:200px;
+	height:200px;
+}
+
+.slot_col {
+    margin-left:32px;
+	width: 249px;
+	height:300px;
+	float:left;
+	text-align: center;
+}
+
+#slot_col_1 {
+	position:relative;
+	top:-350px;
+}
+#slot_col_2 {
+	position:relative;
+	top:-350px;
+}
+#slot_col_3 {
+	position:relative;
+	top:-350px;
+}
+
+label {
+	margin:4px;
+}
+
+#checkout {
+	position: absolute;
+	/*left: -3000px;*/
+	/*hidden offscreen until checkout button triggers it to animate in*/
+	z-index: 9001; /*sits over everything*/
+	top: 1200px;
+	width:1080px;
+    height:640px;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	color:#fff;
+	background-color: #333; /*can add a background-image too*/
+	background: rgba(0, 0, 0, .92)
+}
+
+#submit_container {
+    left:800px;
+    position:absolute;
+}
+
+#checkout_area {
+	width: 92%;
+	margin: auto;
+	padding: 10px;
+}
+
+#checkout h1 {
+	font-size: 1.75em;
+	font-weight: 200;
+	margin: 30px 0;
+	color: #fff;
+	margin: 20px 0 10px 0;
+	padding-bottom: 10px;
+	width: auto;
+}
+
+#checkout label {
+	margin: 2px;
+	display: block;
+	color: #fff;
+}
+
+#submit-button {
+	color: white;
+	text-align: center;
+	padding: 10px 0;
+	text-transform: uppercase;
+	padding-top: 15px;
+	width: 32.5%;
+	height: 30px;
+	line-height: 30px;
+	margin: -65px 0.5% 10px 4%;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border-color: white;
+	font-size: 2.0em;
+	background: #82B336;
+	border: solid 1px white;
+	float: right;
+	position: relative;
+	z-index: 9002;
+}
+
+hr{
+	width:100%;
+}
+
+
+#form_inputs {
+	position:relative;
+	left:64px;
+	top:-64px;
+}
+
+#cancel_button {
+	width:256px;
+	text-align:center;
+	font-size:2.5em;
+	color:black;
+	-webkit-appearance:button;
+	position:relative;
+	left:800px;
+	top:-20px;
+}
+
+#form {
+    text-align:left;
+}
+
+input#emailaddress {
+	margin: 8px;
+	padding: 8px;
+	width: 640px;
+}
+
+#winner {
+    display:none;
+    z-index: 100;
+    width: 800px;
+    opacity: .9;
+    background-color: blue;
+    border: 2px solid white;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+}

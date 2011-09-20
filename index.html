@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Dun & Bradstreet Slot Machine</title>
+<link rel="StyleSheet" type="text/css" href="./css/styles.css"></link>
+<link rel="StyleSheet" type="text/css" href="./css/keyboard.css"></link>
+<link type="text/css" href="./css/ui-darkness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="./js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="./js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="./js/gitana.js"></script>
+<script type="text/javascript" src="./js/leadingreach.js"></script>
+<script type="text/javascript" src="./js/keyboard.js"></script>
+<script type="text/javascript" src="./js/slot_machine.js"></script>
+</head>
+
+<body>
+<div id="container">
+  <header>
+      <div id="logo">
+        <img src="./images/db-logo-220.png" width="451" height="220" alt="asdf" /> 
+      </div>
+      <div id="welcome">
+        <h1>Welcome to Oracle World</h1>
+      </div>
+  </header>
+  <section id="slotmachine">
+    <header id="rotating-message">
+      Select Your Interest and Spin!
+    </header>
+    <div id="holder">
+      <div class="wheels">
+        <img src="./images/col_background.svg" width="249" height="300" />
+      </div>
+      <div class="wheels">
+        <img src="./images/col_background.svg" width="249" height="300" />
+      </div>
+      <div class="wheels">
+        <img src="./images/col_background.svg" width="249" height="300" />
+      </div>
+    </div>
+    <div class="slot_machine_layer">
+      <div class="slot_col" id="slot_col_1"></div>
+      <div class="slot_col" id="slot_col_2"></div>
+      <div class="slot_col" id="slot_col_3"></div>
+    </div>
+    <div id="holder2">
+      <input name="question1" id="q1" type="checkbox"><label class="quiz" for="q1">Know Your Customer Better</label></input>
+      <input name="question2" id="q2" type="checkbox"><label class="quiz" for="q2">Acquire New Prospects</label></input>
+      <input name="question3" id="q3" type="checkbox"><label class="quiz" for="q3">Enhance Data Quality</label></input>
+      <input name="question4" id="q4" type="checkbox"><label class="quiz" for="q4">Grow Existing Accounts</label></input>
+    </div>
+    <div id="spin">
+      <img src="./images/spin.svg" id="spin_svg" />
+    </div>
+    <div class="clear"></div>
+<!-- overlays -->
+    <div id="winner">
+      <h1 id="winner_main">You've won a pig!</h1>
+      <p id="winner_content">See sales associate to redeem pig.</p>
+    </div>
+    <div id="checkout">
+		<div id="checkout_area">
+			<h2>You may already be a winner!</h2>
+			<p>Enter your e-mail address for a chance to win</p>
+			<div id="form">
+                              <div id="submit_container">
+				<a id="submit_button">Submit</a>
+                              </div>
+				<div id="form_inputs">
+					
+					<label for="emailaddress"><span class="required">*</span>E-mail</label><input required name="emailaddress" id="emailaddress" type="email" placeholder="Email Address"></input>	
+					<span class="column"><div class="required">Fields marked with * are required</div></span>
+				</div>	
+				<div id="outkey_container">	
+				<div id="keyboard_container"></div>
+				<div class="center"></div><!--end center-->
+		</div><!--end form inputs-->
+	</div><!--end form-->
+</div><!--end checkout area-->
+<!-- end overlay -->
+    <footer id="footer">
+      <div class="awards">
+      <img src="./images/db-logo-80.png" width="80" height="81" /><img src="./images/db-logo-80.png" width="80" height="81" /><img src="./images/db-logo-80.png" width="80" height="81" /> $20 Best Buy Card
+      </div>
+      <div class="awards">
+    <img src="./images/db-logo-80.png" width="80" height="81" /><img src="./images/db-logo-80.png" width="80" height="81" /> $5 Starbucks Card
+    </div>
+    <div class="awards">
+    Any Combination: D&B Light
+    </div>
+    </footer>
+  </section>
+  </div>
+</body>
+</html>

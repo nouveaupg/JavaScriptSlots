@@ -1,0 +1,136 @@
+/*Keyboard*/
+
+.keyboardButton { /*width: 16px; 
+	height: 16px; */
+	display: block;
+	float: left;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 1);
+	color: #000;
+	line-height: 1;
+	padding-top: 30px;
+	width: 80px;
+	height: 48px;
+	font-size: 1.5em;
+	vertical-align: center;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+	-moz-box-shadow: inset 1px 1px 8px #666;
+	-webkit-box-shadow: inset 1px 1px 8px #666;
+	box-shadow: inner 1px 1px 8px #666;
+	margin: .2em;
+}
+
+.ui-keyboard-row {
+	display: block;
+	clear: both;
+}
+
+.ui-keyboard-actionkey {
+	width: 130px;
+	background-color: rgba(130, 179, 54, 1);
+	color: #fff;
+}
+
+.ui-web {
+	width: 100px;
+}
+
+.ui-blue {
+	background-color: rgba(100, 109, 204, 1);
+	color: #fff;
+}
+
+.keyboardButton { /*width: 16px; 
+	height: 16px; */
+	display: block;
+	float: left;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 1);
+	color: black;
+	line-height: 1;
+	padding-top: 20px;
+	width: 60px;
+	height: 45px;
+	font-size: 1.5em;
+	vertical-align: center;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+	-moz-box-shadow: inset 1px 1px 8px #666;
+	-webkit-box-shadow: inset 1px 1px 8px #666;
+	box-shadow: inner 1px 1px 8px #666;
+	margin: .2em;
+}
+
+.ui-keyboard-row {
+	display: block;
+	clear: both;
+}
+
+.ui-keyboard-actionkey {
+	width: 130px;
+	background-color: rgba(130, 179, 54, 1);
+	color: #fff;
+}
+
+.ui-web {
+	width: 100px;
+	background-color: rgba(100, 109, 204, 1);
+	color: #fff;
+}
+
+.ui-keyboard-space {
+	width: 700px;
+}
+
+#key_shift {
+	width: 142px;
+}
+
+#key_caps {
+	width: 85px;
+}
+
+#key_tab {
+	width: 85px;
+}
+
+#key_bksp {
+	width: 85px;
+}
+
+.ui-keyboard-return {
+	width: 122px;
+}
+
+div#keyboard_container {
+	height: 350px;
+	display: block;
+	background: transparent;
+	z-index: 50000;
+	width: 1080px;
+	margin: 0px auto;
+	clear: both;
+}
+
+#kclose {
+	display: none;
+	clear: both;
+	font-weight: bold;
+	font-size: 1.2em;
+	padding: 5px;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#ktrigger {
+	font-size: 1.2em;
+	font-weight: bold;
+	clear: both;
+	padding: 5px;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
