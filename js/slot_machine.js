@@ -1,9 +1,11 @@
+var rawBadgeData = "";
+
 function slotMachine() {
 	this._slotOrder = ["bell", "cherries", "grapes", "seven", "orange", "plumb", "logo"];
 	this._slotPositions = ["bell", "cherries", "seven"];
 	this._targets = ["logo", "logo", "grapes"];
 	this._remainingRotations = [0, 0, 0];
-	this._duration = [200, 260, 240];
+	this._duration = [110, 100, 100];
 	this._stopped = [true,true,true];
 	this.stop = function(col_index) {
 		this._remainingRotations[col_index - 1] = 0;
@@ -39,10 +41,10 @@ function slotMachine() {
 		
 		// now we send the data to Gitana
 		personData = {"email":$("#emailaddress").val(),
-				"q1":$("#q1").prop(),
-				"q2":$("#q2").prop(),
-				"q3":$("#q3").prop(),
-				"q4":$("#q4").prop(),
+				"q1":$("#q1").prop("checked"),
+				"q2":$("#q2").prop("checked"),
+				"q3":$("#q3").prop("checked"),
+				"q4":$("#q4").prop("checked"),
 				"slots":this._targets};
 		
 		var experience = null;
@@ -56,7 +58,7 @@ function slotMachine() {
 		
 		if( experience ) {
 			var parts = experience.replace("\"","").split(":");
-			clientSettings = {"user":{"username" : "admin","password" : "admin"}};
+			clientSettings = {"user":{"username" : "admin","password" : "w1ntermute*1"}};
 			for( var x in parts ) {
 				var key = parts[x].split("=")[0];
 				var value = parts[x].split("=")[1];
@@ -84,10 +86,10 @@ function slotMachine() {
 					sessionObject = this.session();
 					if( sessionObject ) {	
 						console.log("Notice: leadingreach:session node updated with assets, scopeId, applicationId, surfaceId");
-						sessionObject.set("assets",selectedAssets);
-						sessionObject.set("scopeId",leadingReachObject.scope().getId());
-						sessionObject.set("applicationId",leadingReachObject.application().getId());
-						sessionObject.set("surfaceId",leadingReachObject.surface().getId());
+						sessionObject.set("rawBadgeData",rawBadgeData);
+						sessionObject.set("scopeId",leadingReachObj.scope().getId());
+						sessionObject.set("applicationId",leadingReachObj.application().getId());
+						sessionObject.set("surfaceId",leadingReachObj.surface().getId());
 						sessionObject.update();
 					}else {
 						console.log("Warning: session object not valid");
@@ -110,7 +112,7 @@ function slotMachine() {
 		
 		
 		
-		this._remainingRotations = [2, 3, 4];
+		this._remainingRotations = [4, 6, 8];
 		this._spinSlot(1);
 		this._spinSlot(2);
 		this._spinSlot(3);
