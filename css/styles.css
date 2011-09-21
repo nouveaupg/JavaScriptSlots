@@ -13,6 +13,7 @@ body {
 	height: 1920px;
 	background-image:url(../images/background.jpg);
 	margin: 0 auto;
+    overflow:hidden;
 }
 
 
@@ -133,7 +134,7 @@ body {
 
 .slot_machine_layer {
 	position:absolute;
-	left:200px;
+	left:115px;
 	top:740px;
 	overflow:hidden;
 }

@@ -1,7 +1,7 @@
 function slotMachine() {
-	this._slotOrder = ["pear", "strawberry", "grapes", "seven", "clover", "star", "crown", "coin_stack", "logo"];
-	this._slotPositions = ["grapes", "seven", "pear"];
-	this._targets = ["logo", "logo", "strawberry"];
+	this._slotOrder = ["bell", "cherries", "grapes", "seven", "orange", "plumb", "logo"];
+	this._slotPositions = ["bell", "cherries", "seven"];
+	this._targets = ["logo", "logo", "grapes"];
 	this._remainingRotations = [0, 0, 0];
 	this._duration = [200, 260, 240];
 	this._stopped = [true,true,true];
