@@ -1,4 +1,5 @@
 var rawBadgeData = "";
+var submitLock = false;
 
 function slotMachine() {
 	this._slotOrder = ["bell", "cherries", "grapes", "seven", "orange", "plumb", "logo"];
@@ -121,8 +122,15 @@ function slotMachine() {
 		this._stopped[col_index-1] = true;
 		console.log("Slot " + col_index + " stopped.");
 		if( this._stopped[0] && this._stopped[1] && this._stopped[2] ) {
+			$("#winner_main").html("You've won a promotional keychain!");
+			$("#winner_content").html("Please see associate to claim your prize.")
+			if( this._targets[0] == "logo" && this._targets[1] == "logo" ) {
+				document.getElementById("winner_sound").play();
+			}
+			setTimeout("document.getElementById(\"winner_sound\").pause();window.location.reload();",180000);
 			$("#winner").fadeIn();
-			$("body").click(function() {
+			$("#logo").click(function() {
+				document.getElementById("winner_sound").pause();
 				window.location.reload();	
 			});
 		}
@@ -190,35 +198,47 @@ function slotMachine() {
 		return symbol;
 	};
 	this.init = function() {
-		this._slotPositions[0] = this._slotOrder[Math.floor(Math.random() * this._slotOrder.length)];
-		this._proceedTo(this._slotPositions[0], 1);
-		this._slotPositions[1] = this._slotOrder[Math.floor(Math.random() * this._slotOrder.length)];
-		this._proceedTo(this._slotPositions[1], 2);
-		this._slotPositions[2] = this._slotOrder[Math.floor(Math.random() * this._slotOrder.length)];
-		this._proceedTo(this._slotPositions[2], 3);
+		this._slotPositions[0] = this._slotOrder[this._slotPositions.length-1];
+		this._proceedTo(this._slotPositions.length-1, 1);
+		this._slotPositions[1] = this._slotOrder[this._slotPositions.length-1];
+		this._proceedTo(this._slotPositions.length-1, 2);
+		this._slotPositions[2] = this._slotOrder[this._slotPositions.length-1];
+		this._proceedTo(this._slotPositions.length-1, 3);
 	};
 }
 
 var slotCtx = new slotMachine();
-var intervalRef1 = null;
-var intervalRef2 = null;
-var intervalRef3 = null;
 
 $(document).ready(function() {
     generateKeyboard("#keyboard_container");
+	$("#rotating-message").html("Touch Screen to Play");
 	$("#q1").button();
 	$("#q2").button();
 	$("#q3").button();
 	$("#q4").button();
 	slotCtx.init();
-    intervalRef1 = setInterval("slotCtx._nextSymbol(1,slotCtx._duration[0]);",slotCtx._duration[0]+25);
-    intervalRef2 = setInterval("slotCtx._nextSymbol(2,slotCtx._duration[1]);",slotCtx._duration[1]+25);
-    intervalRef3 = setInterval("slotCtx._nextSymbol(3,slotCtx._duration[2]);",slotCtx._duration[2]+25);
+	intervalRef1 = setInterval("slotCtx._nextSymbol(1,slotCtx._duration[0]);",slotCtx._duration[0]+25);
+	intervalRef2 = setInterval("slotCtx._nextSymbol(2,slotCtx._duration[1]);",slotCtx._duration[1]+25);
+	intervalRef3 = setInterval("slotCtx._nextSymbol(3,slotCtx._duration[2]);",slotCtx._duration[2]+25);
+	$(document).click(function() {
+		clearInterval(intervalRef1);
+		clearInterval(intervalRef2);
+		clearInterval(intervalRef3);
+		$(document).unbind();
+		$("#winner").hide();
+		$("#checkout").animate({top:"400px"},1000);
+		$("#holder2").show();
+		$("#rotating-message").html("Select Your Pain Points");
+		submitLock = true;
+	});
 	$("#cancel_button").click(function() {
 		alert("cancel");	
 	});
 	$(".quiz").click(function() {
-		$("#spin").show();
+		if( !submitLock ) { 
+			$("#rotating-message").html("Press Spin to Play");
+			$("#spin").show();
+		}
 	});
 	$("#submit_button").button();
 	$("#submit_button").click(function() {
@@ -228,6 +248,10 @@ $(document).ready(function() {
 		clearInterval(intervalRef3);
 		$("#spin").hide();
 		$("#holder").show();
+		submitLock = false;
+		if($("#q1").prop("checked") || $("#q2").prop("checked") || $("#q3").prop("checked") || $("#q4").prop("checked") ) {
+			$("#spin").show();
+		}
 	});
 	$("#spin").click(function() {
 		slotCtx.spin();
