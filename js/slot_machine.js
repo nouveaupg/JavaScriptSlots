@@ -96,6 +96,7 @@ function slotMachine() {
 					if (sessionObject) {
 						console.log("Notice: leadingreach:session node updated with assets, scopeId, applicationId, surfaceId");
 						sessionObject.set("rawBadgeData", rawBadgeData);
+						sessionObject.set("assets",[]);
 						sessionObject.set("scopeId", leadingReachObj.scope().getId());
 						sessionObject.set("applicationId", leadingReachObj.application().getId());
 						sessionObject.set("surfaceId", leadingReachObj.surface().getId());
