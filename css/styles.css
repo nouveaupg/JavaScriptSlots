@@ -172,10 +172,14 @@ label {
 	margin:4px;
 }
 
+.awards {
+	font-size:3em;
+	color:white;
+}
+
 #checkout {
 	position: absolute;
-	/*left: -3000px;*/
-	/*hidden offscreen until checkout button triggers it to animate in*/
+	/*hidden offscreen until screen touch to animate in*/
 	z-index: 400;
 	top: -740px;
 	width:1080px;
