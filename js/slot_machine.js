@@ -2,11 +2,10 @@ var rawBadgeData = "";
 var submitLock = false;
 
 function disableSelection(target){
-	if (typeof target.style.MozUserSelect!="undefined") //Firefox route
-		target.style.MozUserSelect="none"
-	else //All other route (ie: Opera)
+	if(target) {
 	target.onmousedown=function(){return false}
 	target.style.cursor = "default"
+	}
 }
 
 function slotMachine() {
@@ -14,7 +13,7 @@ function slotMachine() {
 	this._slotPositions = ["bell", "cherries", "seven"];
 	this._targets = ["logo", "logo", "grapes"];
 	this._remainingRotations = [0, 0, 0];
-	this._duration = [110, 100, 100];
+	this._duration = [220, 200, 250];
 	this._stopped = [true, true, true];
 	this.stop = function(col_index) {
 		this._remainingRotations[col_index - 1] = 0;
@@ -136,10 +135,10 @@ function slotMachine() {
 		this._stopped[col_index - 1] = true;
 		console.log("Slot " + col_index + " stopped.");
 		if (this._stopped[0] && this._stopped[1] && this._stopped[2]) {
-			if (this._targets[0] == "logo" && this._targets[1] == "logo") {
-				$("#winner_main").html("You've won a $5 Starbucks Card!");
-			} else if (this._targets[0] == "logo" && this._targets[1] == "logo" && this._targets[2] == "logo") {
+			if (this._targets[0] == "logo" && this._targets[1] == "logo" && this._targets[2] == "logo") {
 				$("#winner_main").html("You've won a $20 Best Buy Card!");
+			} else if (this._targets[0] == "logo" && this._targets[1] == "logo") {
+				$("#winner_main").html("You've won a $5 Starbucks Card!");
 			} else {
 				$("#winner_main").html("You've won a D&B Light!");
 			}
@@ -231,6 +230,7 @@ function slotMachine() {
 var slotCtx = new slotMachine();
 
 $(document).ready(function() {
+	// production things
 	window.oncontextmenu = function(event) {
 	        event.preventDefault();
 	        event.stopPropagation();
@@ -238,8 +238,16 @@ $(document).ready(function() {
 	};
 	
 	disableSelection(document.getElementById("body"));
-	
+	disableSelection(document.getElementById("submit_button"));
+	disableSelection(document.getElementById("logo"));
+	disableSelection(document.getElementById("holder2"));
+	disableSelection(document.getElementById("quiz1"));
+	disableSelection(document.getElementById("quiz2"));
+	disableSelection(document.getElementById("quiz3"));
+	disableSelection(document.getElementById("quiz4"));
+	disableSelection(document.getElementById("spin"));
 	generateKeyboard("#keyboard_container");
+	
 	$("#rotating-message").html("Touch Screen to Play");
 	$("#q1").button();
 	$("#q2").button();
@@ -272,9 +280,7 @@ $(document).ready(function() {
 		}
 	});
 	$("#submit_button").button();
-	disableSelection(document.getElementById("submit_button"));
-	disableSelection(document.getElementById("logo"));
-	disableSelection(document.getElementById("holder2"));
+	
 	$("#submit_button").click(function() {
 		$("#checkout").fadeOut();
 		clearInterval(intervalRef1);
@@ -287,7 +293,6 @@ $(document).ready(function() {
 			$("#spin").show();
 		}
 	});
-	disableSelection(document.getElementById("spin"));
 	$("#spin").click(function() {
 		slotCtx.spin();
 		$("#spin").hide();
