@@ -1,10 +1,21 @@
 var rawBadgeData = "";
 var submitLock = false;
 
+
 function disableSelection(target){
 	if(target) {
-	target.onmousedown=function(){return false}
-	target.style.cursor = "default"
+	target.onmousedown=function(){return false};
+	target.onselect = function(){return false};
+	target.onstartselect = function(){return false};
+	}
+}
+
+function recursiveDisableSelection(target) {
+	disableSelection(target);
+	if( target.childNodes ) {
+		for( var x in target.childNodes ) {
+			recursiveDisableSelection(target.childNodes[x]);
+		}
 	}
 }
 
@@ -236,7 +247,7 @@ $(document).ready(function() {
 	        event.stopPropagation();
 	        return false;
 	};
-	
+	/*
 	disableSelection(document.getElementById("body"));
 	disableSelection(document.getElementById("submit_button"));
 	disableSelection(document.getElementById("logo"));
@@ -245,7 +256,8 @@ $(document).ready(function() {
 	disableSelection(document.getElementById("quiz2"));
 	disableSelection(document.getElementById("quiz3"));
 	disableSelection(document.getElementById("quiz4"));
-	disableSelection(document.getElementById("spin"));
+	disableSelection(document.getElementById("spin"));*/
+	recursiveDisableSelection(document.getElementById("container"));
 	generateKeyboard("#keyboard_container");
 	
 	$("#rotating-message").html("Touch Screen to Play");
