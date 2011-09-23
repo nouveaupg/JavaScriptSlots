@@ -1,6 +1,14 @@
 var rawBadgeData = "";
 var submitLock = false;
 
+function disableSelection(target){
+	if (typeof target.style.MozUserSelect!="undefined") //Firefox route
+		target.style.MozUserSelect="none"
+	else //All other route (ie: Opera)
+	target.onmousedown=function(){return false}
+	target.style.cursor = "default"
+}
+
 function slotMachine() {
 	this._slotOrder = ["bell", "cherries", "grapes", "seven", "orange", "plumb", "logo"];
 	this._slotPositions = ["bell", "cherries", "seven"];
@@ -141,6 +149,7 @@ function slotMachine() {
 			}
 			setTimeout("document.getElementById(\"winner_sound\").pause();window.location.reload();", 180000);
 			$("#winner").fadeIn();
+			$("#rotating-message").html("WINNER");
 			$("#logo").click(function() {
 				document.getElementById("winner_sound").pause();
 				window.location.reload();
@@ -222,6 +231,14 @@ function slotMachine() {
 var slotCtx = new slotMachine();
 
 $(document).ready(function() {
+	window.oncontextmenu = function(event) {
+	        event.preventDefault();
+	        event.stopPropagation();
+	        return false;
+	};
+	
+	disableSelection(document.getElementById("body"));
+	
 	generateKeyboard("#keyboard_container");
 	$("#rotating-message").html("Touch Screen to Play");
 	$("#q1").button();
@@ -255,6 +272,9 @@ $(document).ready(function() {
 		}
 	});
 	$("#submit_button").button();
+	disableSelection(document.getElementById("submit_button"));
+	disableSelection(document.getElementById("logo"));
+	disableSelection(document.getElementById("holder2"));
 	$("#submit_button").click(function() {
 		$("#checkout").fadeOut();
 		clearInterval(intervalRef1);
@@ -267,6 +287,7 @@ $(document).ready(function() {
 			$("#spin").show();
 		}
 	});
+	disableSelection(document.getElementById("spin"));
 	$("#spin").click(function() {
 		slotCtx.spin();
 		$("#spin").hide();
