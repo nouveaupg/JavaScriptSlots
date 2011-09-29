@@ -288,8 +288,6 @@ function slotMachine() {
 	};
 	
 	this.toggleHidden = function(element) {
-		console.log(element);
-		console.log(element.css("display"));
 		if (element.css("display") == "block") {
 			element.css("display", "none");
 			return;
