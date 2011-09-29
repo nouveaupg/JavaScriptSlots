@@ -1,6 +1,7 @@
 var rawBadgeData = "";
 var submitLock = false;
-
+var sessionObject = null;
+var flashInterval = null;
 
 function disableSelection(target){
 	if(target) {
@@ -65,8 +66,13 @@ function slotMachine() {
 			"q2": $("#q2").prop("checked"),
 			"q3": $("#q3").prop("checked"),
 			"q4": $("#q4").prop("checked"),
-			"slots": this._targets
+			"slots": this._targets,
+			"badgeData": rawUserInfo
 		};
+		
+		$.each(barcodeUserData, function(key, value) {
+			personData[key] = barcodeUserData[key];
+		})
 
 		var experience = null;
 		try {
@@ -111,9 +117,10 @@ function slotMachine() {
 					sessionId = this.session().getId();
 					console.log("Gitana: Starting session " + sessionId);
 					sessionObject = this.session();
+					
 					if (sessionObject) {
 						console.log("Notice: leadingreach:session node updated with assets, scopeId, applicationId, surfaceId");
-						sessionObject.set("rawBadgeData", rawBadgeData);
+						sessionObject.set("rawBadgeData", rawUserInfo);
 						sessionObject.set("assets",[]);
 						sessionObject.set("scopeId", leadingReachObj.scope().getId());
 						sessionObject.set("applicationId", leadingReachObj.application().getId());
@@ -159,7 +166,8 @@ function slotMachine() {
 			}
 			setTimeout("document.getElementById(\"winner_sound\").pause();window.location.reload();", 180000);
 			$("#winner").fadeIn();
-			$("#rotating-message").html("WINNER");
+			$("#rotating-message").html("WINNER!!!");
+			this.pulseText();
 			$("#logo").click(function() {
 				document.getElementById("winner_sound").pause();
 				window.location.reload();
@@ -235,10 +243,67 @@ function slotMachine() {
 		this._proceedTo(this._slotPositions.length - 1, 2);
 		this._slotPositions[2] = this._slotOrder[this._slotPositions.length - 1];
 		this._proceedTo(this._slotPositions.length - 1, 3);
+		var panel = $("#winner");
+		this.flashPanel(panel);
+	};
+	
+	this.validateEmail = function() {
+		var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		var email = $("#emailaddress").val();
+		
+		if (email == "") return false;
+		else if (!emailPattern.test(email)) return false;
+		else return true;
+	};
+	
+	this.pulseText = function() {
+		this.pulseIn();
+	};
+	
+	this.pulseIn = function() {
+		var self = this;
+		$("#rotating-message").animate({
+			fontSize: '+=25px',
+			paddingTop: '-=20px',
+			color: '#0075B4'
+		}, 1500, "linear", function() {
+			self.pulseOut();
+		});
+	};
+
+	this.pulseOut = function() {
+		var self = this;
+		$("#rotating-message").animate({
+			fontSize: '-=25px',
+			paddingTop: '+=20px',
+			color: '#003F72'
+		}, 1500, "linear", function() {
+			self.pulseIn();
+		});
+	};
+	
+	this.flashPanel = function(elt) {
+		var self = this;
+		flashInterval = setInterval(function() {self.toggleHidden(elt);}, 1500);
+	};
+	
+	this.toggleHidden = function(element) {
+		console.log(element);
+		console.log(element.css("display"));
+		if (element.css("display") == "block") {
+			element.css("display", "none");
+			return;
+		}
+		else {
+			element.css("display", "block");
+			return;
+		}
 	};
 }
 
 var slotCtx = new slotMachine();
+
+
 
 $(document).ready(function() {
 	// production things
@@ -273,13 +338,36 @@ $(document).ready(function() {
 		clearInterval(intervalRef1);
 		clearInterval(intervalRef2);
 		clearInterval(intervalRef3);
+		clearInterval(flashInterval);
 		$(document).unbind();
 		$("#winner").hide();
-		$("#checkout").animate({
-			top: "400px"
-		}, 1000);
+		$("#checkout_overlay").animate({
+			top: "0px"
+		}, 1000, function() {
+			focus = setInterval("captureFocus();", 2000);
+			jQuery(document).keydown(function (event) {
+				if (ctrl == true) {
+					ctrl = false;
+					event.preventDefault();
+				}
+				console.log(event.which);
+
+				if (event.which == 13) {
+					parseBarcode();
+				}
+				else if (event.which == 17) {
+					event.preventDefault();
+					ctrl = true;
+				}
+				else if (event.which == 90 && prevKey.which == 17) {
+					parseBarcode();
+				}
+				prevKey = event;
+			});
+		});
+		
 		$("#holder2").show();
-		$("#rotating-message").html("Select Your Pain Points");
+		$("#rotating-message").html("Select Your Interests and Spin!");
 		submitLock = true;
 	});
 	$("#cancel_button").click(function() {
@@ -291,18 +379,39 @@ $(document).ready(function() {
 			$("#spin").show();
 		}
 	});
+	
+	$(".quiz").hover(function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		$(this).removeClass("ui-state-hover");
+	});
+	
+	$(".quiz").addClass("fg-button");
+	
 	$("#submit_button").button();
 	
 	$("#submit_button").click(function() {
-		$("#checkout").fadeOut();
-		clearInterval(intervalRef1);
-		clearInterval(intervalRef2);
-		clearInterval(intervalRef3);
-		$("#spin").hide();
-		$("#holder").show();
-		submitLock = false;
-		if ($("#q1").prop("checked") || $("#q2").prop("checked") || $("#q3").prop("checked") || $("#q4").prop("checked")) {
-			$("#spin").show();
+		if (slotCtx.validateEmail()) {
+			$("#checkout_overlay").fadeOut();
+			clearInterval(intervalRef1);
+			clearInterval(intervalRef2);
+			clearInterval(intervalRef3);
+			$("#spin").hide();
+			$("#holder").show();
+			submitLock = false;
+			if ($("#q1").prop("checked") || $("#q2").prop("checked") || $("#q3").prop("checked") || $("#q4").prop("checked")) {
+				$("#spin").show();
+			}
+		}
+		else {
+			$("#error_box_overlay").fadeIn(400);
+			$("#error_box").fadeIn(400);
+			$("#error_box_overlay").click(function() {
+				$(this).fadeOut(250);
+				$("#error_box").fadeOut(250);
+				$(this).unbind();
+			});
+			
 		}
 	});
 	$("#spin").click(function() {
@@ -310,4 +419,28 @@ $(document).ready(function() {
 		$("#spin").hide();
 		$("#holder2").hide();
 	});
+	
+	focus = setInterval("captureFocus();", 2000);
+	
+	jQuery(document).keydown(function (event) {
+		if (ctrl == true) {
+			ctrl = false;
+			event.preventDefault();
+		}
+		console.log(event.which);
+
+		if (event.which == 13) {
+			parseBarcode();
+		}
+		else if (event.which == 17) {
+			event.preventDefault();
+			ctrl = true;
+		}
+		else if (event.which == 90 && prevKey.which == 17) {
+			parseBarcode();
+		}
+		prevKey = event;
+	});
+	
+	focus = setInterval("captureFocus();", 2000);
 });

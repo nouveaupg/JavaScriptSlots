@@ -12,15 +12,20 @@
 <script type="text/javascript" src="./js/gitana.js"></script>
 <script type="text/javascript" src="./js/leadingreach.js"></script>
 <script type="text/javascript" src="./js/keyboard.js"></script>
+<script type="text/javascript" src="./js/leadcapture.js"></script>
 <script type="text/javascript" src="./js/slot_machine.js"></script>
 </head>
 
 <body>
+<textarea id="raw_string" name="rawString" cols="70" rows="7" datasrc="#text" datafld="Content" style="left:-9999px;position:absolute;" autofocus></textarea>
 <div id="container">
+	<div id="error_box_overlay"><div id="error_box" title="Invalid Email">
+	      <p>Please enter a valid email to play.</p>
+	</div></div>
   <header>
       <audio id="winner_sound" src="./audio/winner.wav" preload="auto" loop="loop"></audio>
       <div id="logo">
-        <img src="./images/db-logo-220.png" width="451" height="220" alt="asdf" /> 
+        <img src="./images/db-logo-220.png" width="390" height="230" alt="asdf" /> 
       </div>
       <div id="welcome">
         <h1>Welcome to Oracle World</h1>
@@ -32,25 +37,20 @@
     </header>
     <div id="holder">
       <div class="wheels">
-        <img src="./images/col_background.svg" width="249" height="300" />
+      	<div class="slot_col" id="slot_col_1"></div>
       </div>
       <div class="wheels">
-        <img src="./images/col_background.svg" width="249" height="300" />
+      	<div class="slot_col" id="slot_col_2"></div>
       </div>
       <div class="wheels">
-        <img src="./images/col_background.svg" width="249" height="300" />
+      	<div class="slot_col" id="slot_col_3"></div>
       </div>
-    </div>
-    <div class="slot_machine_layer">
-      <div class="slot_col" id="slot_col_1"></div>
-      <div class="slot_col" id="slot_col_2"></div>
-      <div class="slot_col" id="slot_col_3"></div>
     </div>
     <div id="holder2">
-      <input name="question1" id="q1" type="checkbox"><label class="quiz" id="quiz1" style="width:400px;height:80px;" for="q1">Know Your Customer Better</label></input>
-      <input name="question2" id="q2" type="checkbox"><label class="quiz" id="quiz2" style="width:400px;height:80px;" for="q2">Acquire New Prospects</label></input>
-      <input name="question3" id="q3" type="checkbox"><label class="quiz" id="quiz3" style="width:400px;height:80px;" for="q3">Enhance Data Quality</label></input>
-      <input name="question4" id="q4" type="checkbox"><label class="quiz" id="quiz4" style="width:400px;height:80px;" for="q4">Grow Existing Accounts</label></input>
+      <input name="question1" id="q1" type="checkbox"><label class="quiz" id="quiz1" style="width:400px;padding:18px 0;font-size:1.2em;" for="q1">Know Your Customer Better</label></input>
+      <input name="question2" id="q2" type="checkbox"><label class="quiz" id="quiz2" style="width:400px;padding:18px 0;font-size:1.2em;" for="q2">Acquire New Prospects</label></input>
+      <input name="question3" id="q3" type="checkbox"><label class="quiz" id="quiz3" style="width:400px;padding:18px 0;font-size:1.2em;" for="q3">Enhance Data Quality</label></input>
+      <input name="question4" id="q4" type="checkbox"><label class="quiz" id="quiz4" style="width:400px;padding:18px 0;font-size:1.2em;" for="q4">Grow Existing Accounts</label></input>
     </div>
     <div id="spin">
       <img src="./images/spin.svg" id="spin_svg" />
@@ -61,25 +61,29 @@
       <h1 id="winner_main">Touch Screen to Play</h1>
       <p id="winner_content"></p>
     </div>
-    <div id="checkout">
-		<div id="checkout_area">
-			<h2>You may already be a winner!</h2>
-			<p>Enter your e-mail address for a chance to win</p>
-			<div id="form">
-                              <div id="submit_container">
-				<a id="submit_button">Submit</a>
-                              </div>
-				<div id="form_inputs">
-					
-					<label for="emailaddress"><span class="required">*</span>E-mail</label><input required name="emailaddress" id="emailaddress" type="email" placeholder="Email Address"></input>	
-					<span class="column"><div class="required">Fields marked with * are required</div></span>
-				</div>	
-				<div id="outkey_container">	
-				<div id="keyboard_container"></div>
-				<div class="center"></div><!--end center-->
-		</div><!--end form inputs-->
-	</div><!--end form-->
-</div><!--end checkout area-->
+    <div id="checkout_overlay">
+    	<div id="checkout">
+			<div id="checkout_area">
+				<h2>Enter your e-mail address to spin, you don't even need a nickel!</h2>
+				<br />
+				<div id="form">
+	                              <div id="submit_container">
+					<a id="submit_button">Submit</a>
+	                              </div>
+	                
+					<div id="form_inputs">
+						
+						<label for="emailaddress"><span class="required"></span>E-mail</label><input required name="emailaddress" id="emailaddress" type="email" placeholder="Email Address"></input>	
+						<span class="column"><div class="required">Email address is required to play D&B Slots.</div></span>
+					</div>	
+					<div id="outkey_container">	
+						<div id="keyboard_container"></div>
+						<div class="center"></div><!--end center-->
+					</div><!--end form inputs-->
+				</div><!--end form-->
+			</div><!--end checkout area-->
+		</div><!-- end checkout -->
+	</div><!-- end checkout overlay -->
 <!-- end overlay -->
   </section>
     <div id="footer_div">
@@ -89,7 +93,7 @@
       <div class="awards">
     <img src="./images/db-logo-80.png" width="80" height="81" /><img src="./images/db-logo-80.png" width="80" height="81" /> $5 Starbucks Card
     </div>
-    <div class="awards">
+    <div class="any_awards">
     Any Combination: D&B Light
     </div>
     </div>

@@ -1,101 +1,106 @@
 var inputTimeout = null;
 var textTimer = null;
+var rawUserInfo = null;
 
-/*$(window).keypress(function(event){
-    if( inputTimeout ) {
-	clearTimeout(inputTimeout);
-    }
-    inputTimeout = setTimeout("parseRFID();",100);
-});*/
-
-function decode_user(input_string) {
-    var main_parts = input_string.split(",");
-
-    console.log(JSON.stringify(main_parts));
-
-    return {
-	"first_name": main_parts[3],
-	"last_name": main_parts[2],
-	"phone_number": main_parts[14],
-	"email": main_parts[16],
-	"company": main_parts[5]
-    };
+function captureFocus(textfield) {
+	var field = textfield;
+	var check = $("#checkout").css("left");
+	//var newcheck = check.replace( /px/ , "");
+	var newcheck = -1001;
+	
+	if(newcheck < -1000 || field == 1) {
+		
+		if (document.activeElement != document.getElementById("raw_string")){
+			$("#raw_string").focus();
+		}
+	}
 
 }
 
-/*function setTimer() {
-	textTimer = setInterval(getText(), 1000);
-	console.log("timer set");
-}
-setTimer();
-
-function getText() {
-
-}*/
-
-function parseCard() {
-    clearTimeout(inputTimeout);
-
-    // get input from card swipe
-    A = $("#raw_string").val();
-    $("#raw_string").val("");
-    // replace unnecessary characters
-    B = A.replace(/\^/gi, ",");
-    C = B.replace(/\*/gi, "@");
-    D = C.replace(/\n/gi, "");
-    E = D.replace(/  /gi, "");
-
-    // establish the types of errors
-    error1 = /%e\?/gi;
-    error2 = /;e\?/gi;
-    error3 = /\+e\?/gi;
-
-    // find these errors throughout the parsed string
-    F1 = error1.test(E);
-    F2 = error2.test(E);
-    F3 = error3.test(E);
-
-    // if any of these errors exist in the code then it is invalid
-    if (F1 || F2 || F3) {
-	error_sound();
-	console.log("Invalid swipe");
-    } else {
-	// otherwise, show the newly cleaned and parsed string
-	var user_info = decode_user(E);
-	console.log(JSON.stringify(user_info));
-
-	$("#firstname").val(user_info.first_name);
-	$("#lastname").val(user_info.last_name);
-	$("#phonenumber").val(user_info.phone_number);
-	$("#emailaddress").val(user_info.email);
-	$("#company").val(user_info.company);
-
-	$("#user_info").val("Welcome, " + user_info.first_name + "!");
-	success_sound();
-    }
-
-
+var barcodeUserData = {
+		"firstName": "",
+		"lastName": "",
+		"title": "",
+		"badgeId": "",
+		"phoneNumber": "",
+		"companyName": "",
+		"email": ""
 }
 
-function parseRFID() {
-    console.log("parsing");
-    var info = $("#raw_string").val();
-
-    // split data with carriage return as delimiter
-    var dataArray = info.split("\n");
-
-    $("#firstname").val(dataArray[2]);
-    $("#lastname").val(dataArray[3]);
-    $("#phonenumber").val(dataArray[17]);
-    $("#emailaddress").val(dataArray[20]);
-    $("#company").val(dataArray[7]);
-    $("#title").val(dataArray[6]);
-    $("#user_info").html("Welcome, " + dataArray[2] + "!");
-
-    $("#raw_string").val("");
-    if (controller._currentView == "ScreensaverView" && $("#firstname").val() != "") {
-	logoutButtonLock = false;
-	controller.display_view("CategoryView");
-	console.log('unlocked logout button');
-    }
+function parseBarcode() {
+	var info = $("#raw_string").val();
+	if (info == " ") return;
+	rawUserInfo = $("#raw_string").val();
+	// split data with carriage return as delimiter
+	var dataArray = info.split("^");
+//	$("#firstname").val(dataArray[0]);
+//	$("#lastname").val(dataArray[1]);
+//	$("#phonenumber").val(dataArray[4]);
+	$("#emailaddress").val(dataArray[6]);
+//	$("#company").val(dataArray[5]);
+//	$("#title").val(dataArray[3]);
+//	$("#user_info").html("Welcome, " + $("#firstname").val() + "!");
+	
+	var step = 0;
+	if (dataArray[1]){
+		$.each(barcodeUserData, function(key, value) {
+			barcodeUserData[key] = dataArray[step];
+			step++;
+		})
+		if(sessionObject){
+			var badgeScans = sessionObject.object["rawBadgeData"];
+			if (badgeScans) {
+				badgeScans.push(rawUserInfo);
+			}
+			else {
+				badgeScans = [rawUserInfo];
+			}
+			sessionObject.set("rawBadgeData", badgeScans);
+			sessionObject.update();
+		}
+	}
+	$("#raw_string").val("");
+	if ($("#rotating-message").html() == "Touch Screen to Play") {
+		clearInterval(intervalRef1);
+		clearInterval(intervalRef2);
+		clearInterval(intervalRef3);
+		$(document).unbind();
+		$("#winner").hide();
+		$("#checkout").animate({
+			top: "400px"
+		}, 1000);
+		$("#holder2").show();
+		$("#rotating-message").html("Select Your Pain Points");
+		submitLock = true;
+	}
+	/*if (controller._currentView == "ScreensaverView" && $("#firstname").val() != "") {
+		logoutButtonLock = false;
+		controller.display_view("CategoryView");
+		setTimeout(function() {
+			var sessionObject = controller._gitanaContext.session();
+			if(sessionObject){
+				var badgeScans = sessionObject.object["rawBadgeData"];
+				
+				if (badgeScans) {
+					badgeScans.push(rawUserInfo);
+				}
+				else {
+					badgeScans = [rawUserInfo];
+				}
+				sessionObject.set("rawBadgeData", badgeScans);
+				sessionObject.update();
+			}
+		}, 5000);
+	}*/
+	console.log("Badge Scanned, updated badge data on session object:");
+	if (sessionObject){
+		console.log(sessionObject.object["rawBadgeData"]);
+	}
 }
+
+
+var caretCount = 0;
+var ctrl = false;
+$(document).ready(function() {
+	
+});
