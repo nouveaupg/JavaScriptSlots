@@ -158,7 +158,7 @@ function slotMachine() {
 			} else if (this._targets[0] == "logo" && this._targets[1] == "logo") {
 				$("#winner_main").html("You've won a $5 Starbucks Card!");
 			} else {
-				$("#winner_main").html("You've won a D&B Light!");
+				$("#winner_main").html("You've won a flashlight!");
 			}
 			$("#winner_content").html("Please see associate to claim your prize.")
 			if (this._targets[0] == "logo" && this._targets[1] == "logo") {
